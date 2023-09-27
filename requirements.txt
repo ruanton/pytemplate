@@ -1,0 +1,11 @@
+plaster_pastedeploy
+pyramid
+pyramid_jinja2
+pyramid_debugtoolbar
+waitress
+pyramid_retry
+pyramid_tm
+pyramid_zodbconn
+transaction
+persistent
+ZODB
