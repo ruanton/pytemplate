@@ -1,5 +1,6 @@
 """
-Access to global application settings located in the ini-file
+Convenient access to global application settings located in the ini-file.
+PyCharm typing support, misconfiguration detection and error reporting.
 """
 
 import inspect
@@ -60,4 +61,6 @@ settings = Settings()
 
 
 def includeme(config: pyramid.config.Configurator):
+    """This function is called by the Pyramid configurator.
+    """
     settings.init(config.registry.settings)
