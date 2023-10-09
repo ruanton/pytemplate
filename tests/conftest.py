@@ -68,7 +68,9 @@ def app_request(app, tm):
     with prepare(registry=app.registry) as env:
         request = env['request']
         request.host = 'example.com'
+        request.tm.begin()
         yield request
+        request.tm.doom()
 
 
 @pytest.fixture
