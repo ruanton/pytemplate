@@ -38,7 +38,7 @@ def get_app_root(conn: ZODB.Connection.Connection) -> AppRoot:
         app_root: AppRoot = zodb_root['app_root']
     else:
         # create a new object
-        if getattr(conn.transaction_manager, '_txn', None) is not None:
+        if tcm.has_transaction(conn_or_tm=conn):
             # we are already in transaction
             app_root = AppRoot()
             zodb_root['app_root'] = app_root

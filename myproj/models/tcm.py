@@ -2,6 +2,9 @@
 Transaction Context Manager helpers
 """
 
+import typing
+import transaction
+import transaction.interfaces
 import ZODB.Connection
 
 
@@ -33,3 +36,18 @@ def in_transaction(conn: ZODB.Connection.Connection, note: str = None) -> Transa
     The 'in_transaction' returns a context manager that can be used with the ``with`` statement.
     """
     return TransactionContextManager(conn, note)
+
+
+def has_transaction(conn_or_tm: typing.Union[ZODB.Connection.Connection, transaction.interfaces.ITransaction]) -> bool:
+    """Determines whether a given connection or transaction manager is currently in a transaction.
+    """
+    if isinstance(conn_or_tm, ZODB.Connection.Connection):
+        conn_or_tm: transaction.interfaces.ITransaction = conn_or_tm.transaction_manager
+
+    if isinstance(conn_or_tm, transaction.ThreadTransactionManager):
+        conn_or_tm = conn_or_tm.manager
+
+    if isinstance(conn_or_tm, transaction.TransactionManager):
+        return getattr(conn_or_tm, '_txn') is not None
+
+    raise ValueError(f'unexpected transaction manager instance: {conn_or_tm}')

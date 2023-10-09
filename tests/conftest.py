@@ -8,6 +8,7 @@ import webtest
 
 # local imports
 from myproj import main
+from myproj.models import tcm
 
 
 def pytest_addoption(parser):
@@ -33,14 +34,14 @@ def app(app_settings):
 @pytest.fixture
 def tm():
     tm = transaction.manager
-    if getattr(tm.manager, '_txn', None) is None:
+    if not tcm.has_transaction(conn_or_tm=tm):
         tm.begin()
 
     tm.doom()
 
     yield tm
 
-    if getattr(tm, '_txn', None) is not None:
+    if tcm.has_transaction(conn_or_tm=tm):
         tm.abort()
 
 
