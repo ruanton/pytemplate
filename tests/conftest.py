@@ -33,12 +33,15 @@ def app(app_settings):
 @pytest.fixture
 def tm():
     tm = transaction.manager
-    tm.begin()
+    if getattr(tm.manager, '_txn', None) is None:
+        tm.begin()
+
     tm.doom()
 
     yield tm
 
-    tm.abort()
+    if getattr(tm, '_txn', None) is not None:
+        tm.abort()
 
 
 @pytest.fixture
