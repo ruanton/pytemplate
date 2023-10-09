@@ -16,6 +16,9 @@ zodbconn.uri = file://%(here)s/../zodb-data/Data.testing.fs?connection_cache_siz
 
 retry.attempts = 3
 
+# rename or remove this and adjust in settings.py
+custom_myproj_parameter = 7
+
 [pshell]
 setup = myproj.pshell.setup
 
