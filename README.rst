@@ -50,9 +50,10 @@ Getting Started
 
     ./venv/bin/pip install -e ".[testing]"
 
-- Create directory for ZODB::
+- Create directories for ZODB and logs if it does't already exist::
 
     mkdir zodb-data
+    mkdir logs
 
 - Create configuration files from samples::
 

@@ -1,7 +1,5 @@
 __pycache__
 venv
-!zodb-data
-zodb-data/*
 logs/*.log
 logs/*.log.*
 config/*
