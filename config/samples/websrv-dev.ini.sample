@@ -45,14 +45,14 @@ listen = localhost:6543
 keys = root, myproj
 
 [handlers]
-keys = console
+keys = console, file, file_warn
 
 [formatters]
 keys = generic
 
 [logger_root]
 level = INFO
-handlers = console
+handlers = console, file, file_warn
 
 [logger_myproj]
 level = DEBUG
@@ -63,6 +63,18 @@ qualname = myproj
 class = StreamHandler
 args = (sys.stderr,)
 level = NOTSET
+formatter = generic
+
+[handler_file]
+class = handlers.TimedRotatingFileHandler
+kwargs = {'filename': r'%(here)s/../logs/websrv.log', 'delay': True, 'when': 'midnight', 'backupCount': 14, 'encoding': 'UTF-8'}
+level = NOTSET
+formatter = generic
+
+[handler_file_warn]
+class = handlers.TimedRotatingFileHandler
+kwargs = {'filename': r'%(here)s/../logs/websrv-warn.log', 'delay': True, 'when': 'midnight', 'backupCount': 14, 'encoding': 'UTF-8'}
+level = WARN
 formatter = generic
 
 [formatter_generic]

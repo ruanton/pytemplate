@@ -14,6 +14,7 @@
       <w>routematch</w>
       <w>testpaths</w>
       <w>threadlocals</w>
+      <w>websrv</w>
       <w>zodbconn</w>
     </words>
   </dictionary>

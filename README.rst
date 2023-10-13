@@ -56,8 +56,9 @@ Getting Started
 
 - Create configuration files from samples::
 
-    cp config/samples/production.ini.sample config/production.ini
-    cp config/samples/development.ini.sample config/development.ini
+    cp config/samples/myscript.ini.sample config/myscript.ini
+    cp config/samples/websrv.ini.sample config/websrv.ini
+    cp config/samples/websrv-dev.ini.sample config/websrv-dev.ini
     cp config/samples/testing.ini.sample config/testing.ini
 
 - Run project's tests::
@@ -67,17 +68,17 @@ Getting Started
 
 - Run project's custom console script::
 
-    ./venv/bin/myscript config/production.ini
+    ./venv/bin/myscript config/myscript.ini
 
 - Run project's webserver::
 
-    ./venv/bin/pserve config/production.ini
+    ./venv/bin/pserve config/websrv.ini
 
   or::
 
-    ./venv/bin/pserve config/development.ini --reload
+    ./venv/bin/pserve config/websrv-dev.ini --reload
 
 - Example bash command to run via cron::
 
-    ps aux | grep -v grep | grep -q production.ini || /root/myproj/venv/bin/myscript /root/myproj/config/production.ini >>/root/myscript.log 2>&1 &
+    ps aux | grep -v grep | grep -q myscript.ini || /root/myproj/venv/bin/myscript /root/myproj/config/myscript.ini >/dev/null 2>&1 &
 
