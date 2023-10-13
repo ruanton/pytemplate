@@ -10,3 +10,4 @@ transaction
 persistent
 ZODB
 BTrees
+ZEO
