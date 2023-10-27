@@ -1,7 +1,7 @@
 plaster_pastedeploy
-pyramid
 pyramid_jinja2
 pyramid_debugtoolbar
+pyramid
 waitress
 pyramid_retry
 pyramid_tm
