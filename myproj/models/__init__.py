@@ -19,7 +19,7 @@ transaction.manager.explicit = True
 class AppRoot(persistent.Persistent):  # in Cookiecutter: base class was PersistentMapping
     """App Root object. Root of all other persistent objects.
     """
-    # __parent__ = __name__ = None   # it was in Cookiecutter, don't know what it's for
+    __parent__ = __name__ = None   # used by Request.resource_path()
 
     def __init__(self):
         pass
