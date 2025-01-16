@@ -1,4 +1,4 @@
-from . import models
+import zmodels
 
 
 def setup(env):
@@ -9,4 +9,4 @@ def setup(env):
 
     # inject some vars into the shell builtins
     env['tm'] = request.tm
-    env['models'] = models
+    env['models'] = zmodels

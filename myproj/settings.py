@@ -51,6 +51,18 @@ class Settings:
         except Exception as e:
             raise ValueError(f'invalid or misconfigured string parameter "{param_key}": {e}')
 
+    def _get_int_list_param(self) -> list[int]:
+        param_key = inspect.currentframe().f_back.f_code.co_name  # the calling function name
+        if not self._settings_dict:
+            raise RuntimeError(f'_settings_dict is not initialized yet')
+
+        try:
+            raw_value = self._settings_dict[param_key]
+            value = [int(x.strip()) for x in raw_value.split(',')] if raw_value and raw_value.strip() else []
+            return value
+        except Exception as e:
+            raise ValueError(f'invalid or misconfigured list of integers parameter "{param_key}": {e}')
+
     @property
     def custom_myproj_parameter(self) -> int:
         """Custom parameter, rename or remove this property"""

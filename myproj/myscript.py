@@ -6,9 +6,14 @@ from pyramid.registry import Registry
 from pyramid.request import Request
 from ZODB.Connection import Connection
 
+# module import
+from helpers.checktime import verify_time_is_correct
+from helpers.misc import xdescr
+from zmodels import get_app_root
+
 # local imports
 from .settings import settings
-from .models import get_app_root
+from . import sys_exit
 
 log = logging.getLogger(__name__)
 
@@ -20,6 +25,10 @@ def myfunction():
 
     # setup logging from config file settings
     setup_logging(args.config_uri)
+
+    # compares the local time with the time received from the NTP servers
+    # throws an exception if it differs significantly
+    verify_time_is_correct()
 
     # bootstrap Pyramid environment to get configuration
     with bootstrap(args.config_uri) as env:
@@ -39,4 +48,8 @@ def myfunction():
 
 
 if __name__ == '__main__':
-    myfunction()
+    try:
+        myfunction()
+    except KeyboardInterrupt as ex:
+        print(f'{xdescr(ex)}')
+        sys_exit(130)

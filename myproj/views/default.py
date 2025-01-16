@@ -1,8 +1,10 @@
 from pyramid.view import view_config
 from pyramid.request import Request
 
+# module imports
+from zmodels import AppRoot
+
 # local imports
-from ..models import AppRoot
 from ..settings import settings
 
 

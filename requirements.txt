@@ -11,3 +11,11 @@ persistent
 ZODB
 BTrees
 ZEO
+timezones
+suid
+simplejson
+jsonpickle
+requests
+aiohttp
+urllib3
+ntplib

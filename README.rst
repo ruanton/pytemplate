@@ -35,56 +35,100 @@ Getting Started
 
 - Upgrade packaging tools::
 
-    ./venv/bin/pip install --upgrade pip setuptools build
+    # linux
+    ./venv/bin/python -m pip  install --upgrade pip setuptools setuptools-scm build
+
+    # windows
+    .\venv\Scripts\python -m pip  install --upgrade pip setuptools setuptools-scm build
 
 - Install and update libraries::
 
+    # linux
     ./venv/bin/pip install -U -r requirements.txt
     ./venv/bin/pip install -U -r requirements-*.txt
 
+    # windows
+    .\venv\Scripts\pip install -U -r requirements.txt
+    .\venv\Scripts\pip install -U -r requirements-*.txt
+
 - Install the project in editable mode::
 
+    # linux
     ./venv/bin/pip install -e .
+
+    # windows
+    .\venv\Scripts\pip install -e .
 
   or::
 
+    # linux
     ./venv/bin/pip install -e ".[testing]"
 
-- Create directories for ZODB and logs if they don't already exist::
-
-    mkdir zodb-data
-    mkdir logs
+    # windows
+    .\venv\Scripts\pip install -e ".[testing]"
 
 - Create configuration files from samples::
 
+    # linux
     cp config/samples/myscript.ini.sample config/myscript.ini
     cp config/samples/websrv.ini.sample config/websrv.ini
     cp config/samples/websrv-dev.ini.sample config/websrv-dev.ini
+    cp config/samples/pshell.ini.sample config/pshell.ini
     cp config/samples/testing.ini.sample config/testing.ini
     cp config/samples/zeo.config.sample config/zeo.config
 
 - Run project's tests::
 
+    # linux
     ./venv/bin/pytest
     ./venv/bin/pytest --cov --cov-report=term-missing
 
+    # windows
+    .\venv\Scripts\pytest
+    .\venv\Scripts\pytest --cov --cov-report=term-missing
+
 - Run ZEO server::
 
+    # linux
     ./venv/bin/runzeo -C config/zeo.config
+
+    # windows
+    .\venv\Scripts\runzeo -C config\zeo.config
 
 - Run project's custom console script::
 
+    # linux
     ./venv/bin/myscript config/myscript.ini
+
+    # windows
+    .\venv\Scripts\myscript config\myscript.ini
+
+- Run Pyramid Shell::
+
+    # linux
+    ./venv/bin/pshell config/pshell.ini
+
+    # windows
+    .\venv\Scripts\pshell config\pshell.ini
 
 - Run project's webserver::
 
+    # linux
     ./venv/bin/pserve config/websrv.ini
+
+    # windows
+    .\venv\Scripts\pserve config\websrv.ini
 
   or::
 
+    # linux
     ./venv/bin/pserve config/websrv-dev.ini --reload
+
+    # windows
+    .\venv\Scripts\pserve config\websrv-dev.ini --reload
 
 - Example bash command to run via cron::
 
+    # linux
     ps aux | grep -v grep | grep -q myscript.ini || /root/myproj/venv/bin/myscript /root/myproj/config/myscript.ini >/dev/null 2>&1 &
 

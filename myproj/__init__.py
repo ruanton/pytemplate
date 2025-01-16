@@ -4,9 +4,13 @@ import pyramid.config
 import pyramid_zodbconn
 import pyramid_tm
 import ZODB
+import sys
+import os
+import signal
 
-# local imports
-from . import models
+# module imports
+import zmodels
+import helpers.misc
 
 log = logging.getLogger(__name__)
 
@@ -15,7 +19,7 @@ def root_factory(request):
     """ This function is called on every web request
     """
     conn = pyramid_zodbconn.get_connection(request)
-    return models.get_app_root(conn)
+    return zmodels.get_app_root(conn)
 
 
 # contains all ZODB database objects created by pyramid_zodbconn
@@ -27,7 +31,7 @@ def main(global_config, **settings):
     """
     _unused = global_config
 
-    # force explicit transactions
+    # force explicit transactions in waitress sub-threads
     # see: https://docs.pylonsproject.org/projects/pyramid_tm/en/latest/index.html#custom-transaction-managers
     settings['tm.manager_hook'] = pyramid_tm.explicit_manager
 
@@ -58,6 +62,31 @@ def zodb_close():
     if _zodbconn_databases:
         log.info('closing all ZODB database objects created by pyramid_zodbconn tween')
         for db in _zodbconn_databases.values():
-            db.close()
+            try:
+                db.close()
+            except pyramid_zodbconn.NoTransaction as ex:
+                log.info(f'zodb_close: {ex}')
+            except Exception as ex:
+                log.warning(f'zodb_close: {ex}')
     else:
         log.warning(f'zodb_close: no zodbconn database objects')
+
+
+def sys_exit(status: str | int | None):
+    try:
+        sys.exit(status)
+    except SystemExit:
+        print(f'SystemExit caught')
+        # noinspection PyUnresolvedReferences,PyProtectedMember
+        os._exit(status)
+
+
+def _sigint_handler(_sig, _frame):
+    print(f'Signal SIGINT caught')
+    sys_exit(130)
+
+
+try:
+    signal.signal(signal.SIGINT, _sigint_handler)
+except ValueError as ex_:
+    print(f'Cannot set signal handler: {helpers.misc.xdescr(ex_)}, ignoring')

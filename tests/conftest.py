@@ -6,9 +6,11 @@ import pytest
 import transaction
 import webtest
 
+# module imports
+from zmodels import tcm
+
 # local imports
 from myproj import main
-from myproj.models import tcm
 
 
 def pytest_addoption(parser):
@@ -34,14 +36,14 @@ def app(app_settings):
 @pytest.fixture
 def tm():
     tm = transaction.manager
-    if not tcm.has_transaction(conn_or_tm=tm):
+    if not tcm.has_transaction(cot=tm):
         tm.begin()
 
     tm.doom()
 
     yield tm
 
-    if tcm.has_transaction(conn_or_tm=tm):
+    if tcm.has_transaction(cot=tm):
         tm.abort()
 
 
@@ -66,11 +68,11 @@ def app_request(app, tm):
 
     """
     with prepare(registry=app.registry) as env:
-        request = env['request']
-        request.host = 'example.com'
-        request.tm.begin()
-        yield request
-        request.tm.doom()
+        req = env['request']  # the 'req' variable was named 'request' which triggered warnings in PyCharm
+        req.host = 'example.com'
+        req.tm.begin()
+        yield req
+        req.tm.doom()
 
 
 @pytest.fixture
