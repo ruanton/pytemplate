@@ -39,7 +39,7 @@ def myfunction():
         for k, v in registry.settings.items():
             print(f'{k} = {v}')
 
-        print(f'\nAccess to custom_myproj_parameter = {settings.custom_myproj_parameter}')
+        print(f'\nAccess to custom_app_parameter = {settings.custom_app_parameter}')
 
         log.info('get database connection and App Root object')
         conn: Connection = get_connection(request)

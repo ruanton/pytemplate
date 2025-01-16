@@ -12,5 +12,7 @@ from ..settings import settings
 def my_view(request: Request):
     _unused = request
     app_root: AppRoot = request.context
-    app_root.my_view_counter = getattr(app_root, 'my_view_counter', settings.custom_myproj_parameter) + 1
+
+    # for testing pytemplate, remove in real project
+    app_root.my_view_counter = getattr(app_root, 'my_view_counter', settings.custom_app_parameter) + 1
     return {'project': 'myproj', 'counter': app_root.my_view_counter}

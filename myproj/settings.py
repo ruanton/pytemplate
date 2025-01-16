@@ -64,7 +64,7 @@ class Settings:
             raise ValueError(f'invalid or misconfigured list of integers parameter "{param_key}": {e}')
 
     @property
-    def custom_myproj_parameter(self) -> int:
+    def custom_app_parameter(self) -> int:
         """Custom parameter, rename or remove this property"""
         return self._get_int_param()
 
