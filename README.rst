@@ -73,6 +73,7 @@ Getting Started
 - Create configuration files from samples::
 
     # linux
+    cp config/samples/defaults.ini.sample config/defaults.ini
     cp config/samples/myscript.ini.sample config/myscript.ini
     cp config/samples/websrv.ini.sample config/websrv.ini
     cp config/samples/websrv-dev.ini.sample config/websrv-dev.ini
